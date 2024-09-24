@@ -96,6 +96,29 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'tasks',
           path: '/tasks',
           builder: (context, params) => TasksWidget(),
+        ),
+        FFRoute(
+          name: 'onboarding',
+          path: '/onboarding',
+          builder: (context, params) => OnboardingWidget(),
+        ),
+        FFRoute(
+          name: 'completed',
+          path: '/completed',
+          builder: (context, params) => CompletedWidget(),
+        ),
+        FFRoute(
+          name: 'details',
+          path: '/details',
+          asyncParams: {
+            'taskDoc': getDoc(['tasks'], TasksRecord.fromSnapshot),
+          },
+          builder: (context, params) => DetailsWidget(
+            taskDoc: params.getParam(
+              'taskDoc',
+              ParamType.Document,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
