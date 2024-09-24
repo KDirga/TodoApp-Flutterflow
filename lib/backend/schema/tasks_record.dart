@@ -37,8 +37,8 @@ class TasksRecord extends FirestoreRecord {
   bool hasUser() => _user != null;
 
   // "completed" field.
-  DateTime? _completed;
-  DateTime? get completed => _completed;
+  bool? _completed;
+  bool get completed => _completed ?? false;
   bool hasCompleted() => _completed != null;
 
   void _initializeFields() {
@@ -46,7 +46,7 @@ class TasksRecord extends FirestoreRecord {
     _details = snapshotData['details'] as String?;
     _created = snapshotData['created'] as bool?;
     _user = snapshotData['user'] as DocumentReference?;
-    _completed = snapshotData['completed'] as DateTime?;
+    _completed = snapshotData['completed'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -87,7 +87,7 @@ Map<String, dynamic> createTasksRecordData({
   String? details,
   bool? created,
   DocumentReference? user,
-  DateTime? completed,
+  bool? completed,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{

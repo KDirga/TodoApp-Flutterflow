@@ -5,28 +5,29 @@ import '/components/task_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'tasks_model.dart';
-export 'tasks_model.dart';
+import 'completed_model.dart';
+export 'completed_model.dart';
 
-class TasksWidget extends StatefulWidget {
-  const TasksWidget({super.key});
+class CompletedWidget extends StatefulWidget {
+  const CompletedWidget({super.key});
 
   @override
-  State<TasksWidget> createState() => _TasksWidgetState();
+  State<CompletedWidget> createState() => _CompletedWidgetState();
 }
 
-class _TasksWidgetState extends State<TasksWidget> {
-  late TasksModel _model;
+class _CompletedWidgetState extends State<CompletedWidget> {
+  late CompletedModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TasksModel());
+    _model = createModel(context, () => CompletedModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -103,7 +104,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
                   child: Text(
-                    'Tasks',
+                    'Completed',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
                           fontFamily: 'Inter',
                           letterSpacing: 0.0,
@@ -120,7 +121,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                           )
                           .where(
                             'completed',
-                            isEqualTo: false,
+                            isEqualTo: true,
                           ),
                     ),
                     builder: (context, snapshot) {
@@ -155,24 +156,21 @@ class _TasksWidgetState extends State<TasksWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed(
-                                'details',
-                                queryParameters: {
-                                  'taskDoc': serializeParam(
-                                    listViewTasksRecord,
-                                    ParamType.Document,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  'taskDoc': listViewTasksRecord,
-                                },
-                              );
+                              await listViewTasksRecord.reference
+                                  .update(createTasksRecordData(
+                                completed: false,
+                              ));
                             },
                             child: TaskWidget(
                               key: Key(
-                                  'Keysx0_${listViewIndex}_of_${listViewTasksRecordList.length}'),
+                                  'Keyjlu_${listViewIndex}_of_${listViewTasksRecordList.length}'),
                               taskDoc: listViewTasksRecord,
-                              checkAction: () async {},
+                              checkAction: () async {
+                                await listViewTasksRecord.reference
+                                    .update(createTasksRecordData(
+                                  completed: true,
+                                ));
+                              },
                             ),
                           );
                         },

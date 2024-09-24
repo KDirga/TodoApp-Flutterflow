@@ -1,16 +1,17 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/add_task_widget.dart';
-import '/components/task_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'tasks_widget.dart' show TasksWidget;
+import 'task_widget.dart' show TaskWidget;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class TasksModel extends FlutterFlowModel<TasksWidget> {
+class TaskModel extends FlutterFlowModel<TaskWidget> {
+  ///  State fields for stateful widgets in this component.
+
+  // State field(s) for Checkbox widget.
+  bool? checkboxValue;
+
   @override
   void initState(BuildContext context) {}
 
