@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'login_model.dart';
@@ -348,9 +347,6 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 fontFamily: 'Inter',
                                                 letterSpacing: 0.0,
                                               ),
-                                          maxLength: 12,
-                                          maxLengthEnforcement:
-                                              MaxLengthEnforcement.enforced,
                                           cursorColor:
                                               FlutterFlowTheme.of(context)
                                                   .primaryText,
@@ -457,9 +453,6 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 fontFamily: 'Inter',
                                                 letterSpacing: 0.0,
                                               ),
-                                          maxLength: 12,
-                                          maxLengthEnforcement:
-                                              MaxLengthEnforcement.enforced,
                                           cursorColor:
                                               FlutterFlowTheme.of(context)
                                                   .primaryText,
@@ -799,7 +792,7 @@ class _LoginWidgetState extends State<LoginWidget>
 
                                 context.goNamedAuth('tasks', context.mounted);
                               },
-                              text: 'Login',
+                              text: 'Button',
                               options: FFButtonOptions(
                                 width: double.infinity,
                                 height: 50.0,

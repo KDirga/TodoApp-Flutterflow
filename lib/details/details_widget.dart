@@ -103,8 +103,8 @@ class _DetailsWidgetState extends State<DetailsWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               size: 30.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed: () async {
+                              context.safePop();
                             },
                           ),
                           FlutterFlowIconButton(
@@ -170,34 +170,34 @@ class _DetailsWidgetState extends State<DetailsWidget> {
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
-                                width: 1.0,
+                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
-                                width: 1.0,
+                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 1.0,
+                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 1.0,
+                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             filled: true,
                             fillColor: _model.editingMode
-                                ? Color(0x6657636C)
+                                ? Color(0x8057636C)
                                 : FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                           ),
@@ -224,7 +224,7 @@ class _DetailsWidgetState extends State<DetailsWidget> {
                           controller: _model.textController2,
                           focusNode: _model.textFieldFocusNode2,
                           autofocus: false,
-                          readOnly: !_model.editingMode,
+                          readOnly: _model.editingMode,
                           obscureText: false,
                           decoration: InputDecoration(
                             isDense: true,
@@ -243,34 +243,34 @@ class _DetailsWidgetState extends State<DetailsWidget> {
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
-                                width: 1.0,
+                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
-                                width: 1.0,
+                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 1.0,
+                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
-                                width: 1.0,
+                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             filled: true,
                             fillColor: _model.editingMode
-                                ? Color(0x6657636C)
+                                ? Color(0x8057636C)
                                 : FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                           ),

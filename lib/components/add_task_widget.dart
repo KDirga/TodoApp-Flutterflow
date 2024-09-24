@@ -225,12 +225,12 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                         _model.titleTextController.text,
                         'title',
                       ),
-                      details: valueOrDefault<String>(
-                        _model.detailsTextController.text,
-                        'details',
-                      ),
+                      details: _model.detailsTextController.text,
+                      completed: false,
                       user: currentUserReference,
+                      created: getCurrentTimestamp,
                     ));
+                Navigator.pop(context);
               },
               text: 'Add Task',
               icon: Icon(

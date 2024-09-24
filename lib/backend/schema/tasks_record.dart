@@ -26,11 +26,6 @@ class TasksRecord extends FirestoreRecord {
   String get details => _details ?? '';
   bool hasDetails() => _details != null;
 
-  // "created" field.
-  bool? _created;
-  bool get created => _created ?? false;
-  bool hasCreated() => _created != null;
-
   // "user" field.
   DocumentReference? _user;
   DocumentReference? get user => _user;
@@ -41,12 +36,17 @@ class TasksRecord extends FirestoreRecord {
   bool get completed => _completed ?? false;
   bool hasCompleted() => _completed != null;
 
+  // "created" field.
+  DateTime? _created;
+  DateTime? get created => _created;
+  bool hasCreated() => _created != null;
+
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _details = snapshotData['details'] as String?;
-    _created = snapshotData['created'] as bool?;
     _user = snapshotData['user'] as DocumentReference?;
     _completed = snapshotData['completed'] as bool?;
+    _created = snapshotData['created'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -85,17 +85,17 @@ class TasksRecord extends FirestoreRecord {
 Map<String, dynamic> createTasksRecordData({
   String? title,
   String? details,
-  bool? created,
   DocumentReference? user,
   bool? completed,
+  DateTime? created,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'title': title,
       'details': details,
-      'created': created,
       'user': user,
       'completed': completed,
+      'created': created,
     }.withoutNulls,
   );
 
@@ -109,14 +109,14 @@ class TasksRecordDocumentEquality implements Equality<TasksRecord> {
   bool equals(TasksRecord? e1, TasksRecord? e2) {
     return e1?.title == e2?.title &&
         e1?.details == e2?.details &&
-        e1?.created == e2?.created &&
         e1?.user == e2?.user &&
-        e1?.completed == e2?.completed;
+        e1?.completed == e2?.completed &&
+        e1?.created == e2?.created;
   }
 
   @override
   int hash(TasksRecord? e) => const ListEquality()
-      .hash([e?.title, e?.details, e?.created, e?.user, e?.completed]);
+      .hash([e?.title, e?.details, e?.user, e?.completed, e?.created]);
 
   @override
   bool isValidKey(Object? o) => o is TasksRecord;

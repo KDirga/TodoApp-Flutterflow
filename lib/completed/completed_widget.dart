@@ -1,7 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/add_task_widget.dart';
-import '/components/task_widget.dart';
+import '/components/ta_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -70,6 +70,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
+                // Open Bottom Sheet
                 await showModalBottomSheet(
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
@@ -96,7 +97,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 40.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +112,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
                         ),
                   ),
                 ),
-                Expanded(
+                Flexible(
                   child: StreamBuilder<List<TasksRecord>>(
                     stream: queryTasksRecord(
                       queryBuilder: (tasksRecord) => tasksRecord
@@ -150,28 +151,16 @@ class _CompletedWidgetState extends State<CompletedWidget> {
                         itemBuilder: (context, listViewIndex) {
                           final listViewTasksRecord =
                               listViewTasksRecordList[listViewIndex];
-                          return InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
+                          return TaWidget(
+                            key: Key(
+                                'Keymiz_${listViewIndex}_of_${listViewTasksRecordList.length}'),
+                            tasksDoc: listViewTasksRecord,
+                            checkAction: () async {
                               await listViewTasksRecord.reference
                                   .update(createTasksRecordData(
                                 completed: false,
                               ));
                             },
-                            child: TaskWidget(
-                              key: Key(
-                                  'Keyjlu_${listViewIndex}_of_${listViewTasksRecordList.length}'),
-                              taskDoc: listViewTasksRecord,
-                              checkAction: () async {
-                                await listViewTasksRecord.reference
-                                    .update(createTasksRecordData(
-                                  completed: true,
-                                ));
-                              },
-                            ),
                           );
                         },
                       );

@@ -1,10 +1,11 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/add_task_widget.dart';
-import '/components/task_widget.dart';
+import '/components/ta_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -69,6 +70,7 @@ class _TasksWidgetState extends State<TasksWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
+                // Open Bottom Sheet
                 await showModalBottomSheet(
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
@@ -95,7 +97,7 @@ class _TasksWidgetState extends State<TasksWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 40.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +112,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                         ),
                   ),
                 ),
-                Expanded(
+                Flexible(
                   child: StreamBuilder<List<TasksRecord>>(
                     stream: queryTasksRecord(
                       queryBuilder: (tasksRecord) => tasksRecord
@@ -168,11 +170,16 @@ class _TasksWidgetState extends State<TasksWidget> {
                                 },
                               );
                             },
-                            child: TaskWidget(
+                            child: TaWidget(
                               key: Key(
                                   'Keysx0_${listViewIndex}_of_${listViewTasksRecordList.length}'),
-                              taskDoc: listViewTasksRecord,
-                              checkAction: () async {},
+                              tasksDoc: listViewTasksRecord,
+                              checkAction: () async {
+                                await listViewTasksRecord.reference
+                                    .update(createTasksRecordData(
+                                  completed: true,
+                                ));
+                              },
                             ),
                           );
                         },
