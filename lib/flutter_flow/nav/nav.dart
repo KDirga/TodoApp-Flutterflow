@@ -79,13 +79,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? TasksWidget() : LoginWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? TasksWidget() : LoginWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
         ),
         FFRoute(
           name: 'login',
@@ -95,17 +95,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'tasks',
           path: '/tasks',
-          builder: (context, params) => TasksWidget(),
+          builder: (context, params) =>
+              params.isEmpty ? NavBarPage(initialPage: 'tasks') : TasksWidget(),
         ),
         FFRoute(
           name: 'onboarding',
           path: '/onboarding',
           builder: (context, params) => OnboardingWidget(),
-        ),
-        FFRoute(
-          name: 'completed',
-          path: '/completed',
-          builder: (context, params) => CompletedWidget(),
         ),
         FFRoute(
           name: 'details',
@@ -119,6 +115,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.Document,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'completed',
+          path: '/completed',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'completed')
+              : CompletedWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

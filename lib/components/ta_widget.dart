@@ -4,25 +4,25 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'task_model.dart';
-export 'task_model.dart';
+import 'ta_model.dart';
+export 'ta_model.dart';
 
-class TaskWidget extends StatefulWidget {
-  const TaskWidget({
+class TaWidget extends StatefulWidget {
+  const TaWidget({
     super.key,
-    required this.taskDoc,
+    required this.tasksDoc,
     required this.checkAction,
   });
 
-  final TasksRecord? taskDoc;
+  final TasksRecord? tasksDoc;
   final Future Function()? checkAction;
 
   @override
-  State<TaskWidget> createState() => _TaskWidgetState();
+  State<TaWidget> createState() => _TaWidgetState();
 }
 
-class _TaskWidgetState extends State<TaskWidget> {
-  late TaskModel _model;
+class _TaWidgetState extends State<TaWidget> {
+  late TaModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -33,7 +33,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TaskModel());
+    _model = createModel(context, () => TaModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -79,10 +79,12 @@ class _TaskWidgetState extends State<TaskWidget> {
                   unselectedWidgetColor: FlutterFlowTheme.of(context).alternate,
                 ),
                 child: Checkbox(
-                  value: _model.checkboxValue ??= true,
+                  value: _model.checkboxValue ??= widget!.tasksDoc!.completed,
                   onChanged: (newValue) async {
                     safeSetState(() => _model.checkboxValue = newValue!);
                     if (newValue!) {
+                      await widget.checkAction?.call();
+                    } else {
                       await widget.checkAction?.call();
                     }
                   },
@@ -99,7 +101,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                   padding: EdgeInsets.all(12.0),
                   child: Text(
                     valueOrDefault<String>(
-                      widget!.taskDoc?.title,
+                      widget!.tasksDoc?.title,
                       'title',
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
