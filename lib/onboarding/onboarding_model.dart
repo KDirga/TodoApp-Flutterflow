@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
   ///  State fields for stateful widgets in this page.
@@ -27,6 +29,8 @@ class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
   TextEditingController? profileNameTextController;
   String? Function(BuildContext, String?)? profileNameTextControllerValidator;
   DateTime? datePicked;
+  // Stores action output result for [Backend Call - API (SendWelcomeEmail)] action in profile-button_complete widget.
+  ApiCallResponse? apiResult;
 
   @override
   void initState(BuildContext context) {}

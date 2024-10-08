@@ -187,6 +187,30 @@ class _TasksWidgetState extends State<TasksWidget> {
                     },
                   ),
                 ),
+                FFButtonWidget(
+                  onPressed: () {
+                    print('Button pressed ...');
+                  },
+                  text: 'Log Out',
+                  options: FFButtonOptions(
+                    height: 50.0,
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    iconPadding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: FlutterFlowTheme.of(context).primary,
+                    textStyle:
+                        FlutterFlowTheme.of(context).labelMedium.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
+                    elevation: 0.0,
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).primaryText,
+                    ),
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),
+                ),
               ].divide(SizedBox(height: 12.0)),
             ),
           ),
