@@ -374,6 +374,22 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                       );
 
                       if ((_model.apiResult?.succeeded ?? true)) {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Welcome!'),
+                              content: Text('We\'ve sent you a welcome email!'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                         await launchUrl(Uri(
                             scheme: 'mailto',
                             path: currentUserEmail,
