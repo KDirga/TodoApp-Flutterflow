@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'onboarding_model.dart';
 export 'onboarding_model.dart';
 
@@ -364,6 +366,58 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                       ));
 
                       context.goNamed('tasks');
+
+                      _model.apiResult = await SendWelcomeEmailCall.call(
+                        to: currentUserEmail,
+                        subject: FFAppConstants.constSubject,
+                        text: FFAppConstants.constText,
+                      );
+
+                      if ((_model.apiResult?.succeeded ?? true)) {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Welcome!'),
+                              content: Text('We\'ve sent you a welcome email!'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        await launchUrl(Uri(
+                            scheme: 'mailto',
+                            path: currentUserEmail,
+                            query: {
+                              'subject': FFAppConstants.constSubject,
+                              'body': FFAppConstants.constText,
+                            }
+                                .entries
+                                .map((MapEntry<String, String> e) =>
+                                    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                .join('&')));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              (_model.apiResult?.exceptionMessage ?? ''),
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).secondary,
+                          ),
+                        );
+                      }
+
+                      safeSetState(() {});
                     },
                     text: 'Complete Profile',
                     options: FFButtonOptions(
